@@ -1,0 +1,848 @@
+{
+    "engine": "LGT",
+    "version": "4.1.0",
+    "memory": {
+        "total": 128715,
+        "available": 124735
+    },
+    "cpus": 32,
+    "images": 183,
+    "options": {
+        "3d_tiles": false,
+        "align": null,
+        "auto_boundary": true,
+        "auto_boundary_distance": 0,
+        "bg_removal": false,
+        "boundary": {},
+        "build_overviews": false,
+        "camera_lens": "auto",
+        "cameras": {},
+        "cog": true,
+        "copy_to": null,
+        "crop": 3,
+        "crs": "utm",
+        "dem_euclidean_map": false,
+        "dem_resolution": 2.0,
+        "dsm": true,
+        "dtm": false,
+        "end_with": "odm_postprocess",
+        "fast_orthophoto": false,
+        "feature_quality": "high",
+        "feature_type": "dspsift",
+        "force_gps": false,
+        "gcp": null,
+        "geo": null,
+        "gltf": true,
+        "gps_accuracy": 3,
+        "gps_z_offset": 0,
+        "ignore_gsd": false,
+        "matcher_neighbors": 8,
+        "matcher_order": 24,
+        "max_concurrency": 32,
+        "merge": "all",
+        "mesh_octree_depth": 11,
+        "mesh_size": 0,
+        "min_num_features": 10000,
+        "name": "9124b791-9d9b-4b22-8ed2-06813a3ce0cf",
+        "no_gpu": false,
+        "optimize_disk_space": true,
+        "orthophoto_compression": "DEFLATE",
+        "orthophoto_cutline": false,
+        "orthophoto_kmz": false,
+        "orthophoto_no_tiled": false,
+        "orthophoto_png": false,
+        "orthophoto_resolution": 2.0,
+        "pc_classify": false,
+        "pc_copc": false,
+        "pc_csv": false,
+        "pc_ept": true,
+        "pc_filter": 5,
+        "pc_las": false,
+        "pc_quality": "medium",
+        "pc_sample": 0,
+        "pc_skip_geometric": false,
+        "primary_band": "auto",
+        "project_path": "/var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf",
+        "radiometric_calibration": "none",
+        "rerun": null,
+        "rerun_all": true,
+        "rerun_from": null,
+        "rolling_shutter": false,
+        "rolling_shutter_readout": 0,
+        "sfm_algorithm": "incremental",
+        "sfm_no_partial": true,
+        "skip_3dmodel": false,
+        "skip_band_alignment": false,
+        "skip_orthophoto": false,
+        "skip_report": false,
+        "sky_removal": false,
+        "sm_cluster": null,
+        "sm_no_align": false,
+        "smrf_scalar": 1.25,
+        "smrf_slope": 0.15,
+        "smrf_threshold": 0.5,
+        "smrf_window": 18.0,
+        "split": 999999,
+        "split_image_groups": null,
+        "split_overlap": 150,
+        "texturing_single_material": false,
+        "texturing_skip_global_seam_leveling": false,
+        "tiles": false,
+        "use_3dmesh": false,
+        "use_exif": false,
+        "use_fixed_camera_params": false,
+        "video_limit": 500,
+        "video_resolution": 4000
+    },
+    "startTime": "2025-12-27T04:48:07.434040",
+    "stages": [
+        {
+            "name": "dataset",
+            "startTime": "2025-12-27T04:48:08.533914",
+            "messages": [
+                {
+                    "message": "============ Dataset =============",
+                    "type": "info"
+                },
+                {
+                    "message": "Scanning: /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/images",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading 183 images",
+                    "type": "info"
+                },
+                {
+                    "message": "Wrote images database: /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/images.json",
+                    "type": "info"
+                },
+                {
+                    "message": "Found 183 usable images",
+                    "type": "info"
+                },
+                {
+                    "message": "CRS set to EPSG:32760 ",
+                    "type": "info"
+                }
+            ]
+        },
+        {
+            "name": "split",
+            "startTime": "2025-12-27T04:48:09.211752",
+            "messages": [
+                {
+                    "message": "============= Split ==============",
+                    "type": "info"
+                },
+                {
+                    "message": "Normal dataset, will process all at once.",
+                    "type": "info"
+                }
+            ]
+        },
+        {
+            "name": "merge",
+            "startTime": "2025-12-27T04:48:09.211801",
+            "messages": [
+                {
+                    "message": "============= Merge ==============",
+                    "type": "info"
+                },
+                {
+                    "message": "Normal dataset, nothing to merge.",
+                    "type": "info"
+                }
+            ]
+        },
+        {
+            "name": "opensfm",
+            "startTime": "2025-12-27T04:48:09.211823",
+            "messages": [
+                {
+                    "message": "============ Opensfm =============",
+                    "type": "info"
+                },
+                {
+                    "message": "Maximum photo dimensions: 4096px",
+                    "type": "info"
+                },
+                {
+                    "message": "Photo dimensions for feature extraction: 2048px",
+                    "type": "info"
+                },
+                {
+                    "message": "Enough geotagged images, ignoring --matcher-order",
+                    "type": "warning"
+                },
+                {
+                    "message": "Altitude data detected, enabling it for GPS alignment",
+                    "type": "info"
+                },
+                {
+                    "message": "Matcher neighbors: 8",
+                    "type": "info"
+                },
+                {
+                    "message": "Matcher graph rounds: 50",
+                    "type": "info"
+                },
+                {
+                    "message": "Wrote reference_lla.json",
+                    "type": "info"
+                },
+                {
+                    "message": "Exporting reconstruction stats",
+                    "type": "info"
+                },
+                {
+                    "message": "Updating /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/opensfm/config.yaml",
+                    "type": "info"
+                },
+                {
+                    "message": "undistorted_image_max_size: 4096",
+                    "type": "info"
+                },
+                {
+                    "message": "Undistorting /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/opensfm ...",
+                    "type": "info"
+                }
+            ]
+        },
+        {
+            "name": "openmvs",
+            "startTime": "2025-12-27T04:55:11.200313",
+            "messages": [
+                {
+                    "message": "============ Openmvs =============",
+                    "type": "info"
+                },
+                {
+                    "message": "Depthmap resolution set to: 512px",
+                    "type": "info"
+                },
+                {
+                    "message": "Running dense reconstruction. This might take a while.",
+                    "type": "info"
+                },
+                {
+                    "message": "Estimating depthmaps",
+                    "type": "info"
+                },
+                {
+                    "message": "No nvidia-smi detected",
+                    "type": "info"
+                }
+            ]
+        },
+        {
+            "name": "odm_filterpoints",
+            "startTime": "2025-12-27T05:07:12.421788",
+            "messages": [
+                {
+                    "message": "======== Filterpoints ========",
+                    "type": "info"
+                },
+                {
+                    "message": "Filtering /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/opensfm/undistorted/openmvs/scene_dense_dense_filtered.ply (statistical, meanK 16, standard deviation 5)",
+                    "type": "info"
+                },
+                {
+                    "message": "Boundary [[211.13143184347527, -275.7652600982947], [200.51228140693374, -283.9773223090706], [189.48733513007855, -291.6359685862226], [178.0854052993537, -298.7211841701319], [166.33628938140563, -305.2144529011821], [154.27069215572655, -311.09880560010424], [141.9201454790028, -316.35886441197], [129.31692587855022, -320.98088300533345], [116.4939701904378, -324.95278248170143], [103.4847894909627, -328.264182946903], [90.32338151990652, -330.9064306353939], [77.04414182526043, -332.87262052742517], [63.68177388384455, -334.1576143868988], [50.2711984036442, -334.7580541942989], [36.847462053848254, -334.6723709197504], [23.44564589604951, -333.9007886180443], [-63.16209642248479, -326.68944746747366], [-78.40666883592976, -324.9704353709494], [-93.52483898433175, -322.36411862613386], [-108.46500662856752, -318.87939312567687], [-119.87235881815914, -315.8647698743989], [-132.58875232070469, -312.15868091795346], [-145.1020883792361, -307.81608283173045], [-157.3805293768227, -302.8480245925275], [-169.392835360747, -297.26714652942246], [-181.10844351167808, -291.0876481577543], [-192.49754590718558, -284.3252520568458], [-200.96811204680026, -279.0023310880897], [-212.1597556360929, -271.56336011390886], [-222.95617161944293, -263.56157545864335], [-233.3290845147848, -255.01793368745348], [-243.2513280058328, -245.95481045849374], [-252.69691605263407, -236.39594193713492], [-261.6411109825994, -226.36636261155581], [-270.0604882576435, -215.89233974812305], [-277.932997823721, -205.0013045778287], [-289.7011031644351, -187.8110639697661], [-299.3016454254093, -172.7074872416233], [-317.51828846576876, -141.76833948379135], [-324.4098243316684, -129.3023274725092], [-330.61526142540873, -116.48096798386177], [-336.1163407643025, -103.34198695493615], [-340.89687589593717, -89.92404488453394], [-344.94280050400897, -76.26662308329469], [-348.24220981242155, -62.409907507968455], [-350.7853955891614, -48.39467051511383], [-352.5648747335353, -34.2621508913835], [-353.57541129345094, -20.05393251895657], [-354.2685604382122, -4.267044137955963], [-354.51077877133406, 9.60289010100314], [-354.0202038295965, 23.466262032019586], [-352.798204671154, 37.28438289623955], [-350.8481915377478, 51.018690203989536], [-348.17560635102467, 64.63085537657389], [-346.2057392028209, 73.42794882899398], [-342.8931342788555, 86.61136169659221], [-338.9027507564451, 99.60569013862187], [-334.2452814834241, 112.3761137609581], [-328.9332068426583, 124.88841215215871], [-322.9807613475995, 137.10905658148477], [-316.4038954765701, 149.00529984405512], [-306.4896087634542, 165.8907925949643], [-300.24193204150555, 176.000369778576], [-293.5432350840119, 185.8169110703493], [-286.40723846570376, 195.3203096922698], [-280.2782751406475, 203.1090775818775], [-267.243217671551, 218.42842246333385], [-252.84994844827352, 234.08699402420098], [-243.12620596631214, 244.11648543851697], [-232.88286500624864, 253.61468792028973], [-222.1489140680923, 262.5547215493607], [-210.9547300846597, 270.9112860045607], [-199.3319924538072, 278.660732167049], [-187.31359338157827, 285.78112904887894], [-180.04828636199719, 289.82839899111787], [-168.85372828444716, 295.7158363347153], [-157.38865712555608, 301.057391341983], [-145.6796725933954, 305.8406711423049], [-133.7539402950487, 310.05457810845473], [-121.63912872373376, 313.68933558158824], [-109.36334504975721, 316.73651056990275], [-96.59182229984336, 319.58205222964534], [-83.90993334338319, 322.0816900559912], [-71.12040261461416, 323.954234123903], [-58.25421929513587, 325.19514711361626], [-45.34255829258373, 325.8014221635858], [-32.41670472777233, 325.7715901380616], [-19.223325292957185, 325.4163058700251], [-6.271164942386264, 324.74712136827657], [85.85201420795156, 317.70283281730735], [99.96965913500853, 316.238611093464], [113.98756907708693, 314.0137353220234], [127.86479066396814, 311.0347053247715], [141.56078154753877, 307.3102241905617], [155.03552881951427, 302.8511728511403], [168.24966591512302, 297.67057828951874], [181.16458764174703, 291.78357549358407], [193.74256294427423, 285.20736322898665], [213.71383429548686, 274.0682912508237], [225.22555455876963, 267.25751570772627], [236.37553622710502, 259.86939715195695], [247.134850142903, 251.9231042733627], [257.47558074109935, 243.43925398282954], [267.37089849324644, 234.43985790780062], [276.795129496285, 224.9482652966144], [285.72382211059545, 214.9891024369026], [294.1338103760218, 204.58820874357843], [302.0032741464393, 193.77256975297132], [309.31179567470195, 182.5702470687429], [316.0404126173535, 171.0103055799591], [322.17166720659685, 159.1227380393284], [327.6896515743875, 146.93838725865135], [339.92446484972703, 117.98183204394081], [345.0888671989388, 104.77531643884504], [349.5328291910419, 91.30927329717451], [353.24339149941903, 77.62297167975703], [356.2097335036097, 63.756322949866444], [358.42320485066836, 49.749764411451906], [359.8773506861481, 35.64414135946208], [360.56793047356865, 21.480587987902254], [360.4929303691907, 7.300407426173479], [359.65256907316603, -6.855048710738629], [358.0492972194052, -20.944500905719906], [355.687790215744, -34.92686212414628], [352.5749346040839, -48.76135762341073], [348.71980798701503, -62.40764387350282], [329.9183345084612, -122.6891862696757], [325.4107904952553, -135.8959889163052], [320.2080165134112, -148.8446847379928], [314.3247059266151, -161.49870493568233], [307.7774740323958, -173.82231292573488], [300.58481112364194, -185.78070525990552], [292.7670302894267, -197.34010991619652], [284.34621002184673, -208.4678816774649], [275.34613188254394, -219.132594325838], [265.79221333560514, -229.3041293889073], [255.71143594678242, -238.9537612071981], [245.13226920759288, -248.0542380607476], [211.13143184347527, -275.7652600982947]]",
+                    "type": "info"
+                }
+            ]
+        },
+        {
+            "name": "odm_meshing",
+            "startTime": "2025-12-27T05:07:37.823810",
+            "messages": [
+                {
+                    "message": "========== Meshing ===========",
+                    "type": "info"
+                },
+                {
+                    "message": "Mesh size set to 150000",
+                    "type": "info"
+                },
+                {
+                    "message": "Generating mesh: /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_meshing/odm_mesh.ply",
+                    "type": "info"
+                },
+                {
+                    "message": "Writing 2.5D Mesh file in: /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_meshing/odm_25dmesh.ply",
+                    "type": "info"
+                },
+                {
+                    "message": "Maximum resolution set to 1.0 * (GSD - 10.0%) (2.36 cm / pixel, requested resolution was 2.00 cm / pixel)",
+                    "type": "warning"
+                },
+                {
+                    "message": "2.5D DSM resolution: 0.03",
+                    "type": "info"
+                },
+                {
+                    "message": "Created temporary directory: /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_meshing/tmp",
+                    "type": "info"
+                },
+                {
+                    "message": "Creating DSM for 2.5D mesh",
+                    "type": "info"
+                },
+                {
+                    "message": "Generated 27 tiles",
+                    "type": "info"
+                },
+                {
+                    "message": "Filtering /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_meshing/tmp/merged.vrt",
+                    "type": "info"
+                },
+                {
+                    "message": "Completed smoothing to create /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_meshing/tmp/mesh_dsm.tif in 0:00:06.272448",
+                    "type": "info"
+                },
+                {
+                    "message": "Completed mesh_dsm.tif in 0:00:13.479838",
+                    "type": "info"
+                },
+                {
+                    "message": "Creating mesh from DSM: /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_meshing/tmp/mesh_dsm.tif",
+                    "type": "info"
+                }
+            ]
+        },
+        {
+            "name": "mvs_texturing",
+            "startTime": "2025-12-27T05:10:49.387777",
+            "messages": [
+                {
+                    "message": "========= Mvs texturing ==========",
+                    "type": "info"
+                },
+                {
+                    "message": "Generating textured model",
+                    "type": "info"
+                },
+                {
+                    "message": "Generating textured model",
+                    "type": "info"
+                }
+            ]
+        },
+        {
+            "name": "odm_georeferencing",
+            "startTime": "2025-12-27T05:13:28.772238",
+            "messages": [
+                {
+                    "message": "======= Georeferencing =======",
+                    "type": "info"
+                },
+                {
+                    "message": "LAS scale set at 0.001",
+                    "type": "info"
+                },
+                {
+                    "message": "Georeferencing point cloud",
+                    "type": "info"
+                },
+                {
+                    "message": "Calculating cropping area and generating bounds shapefile from point cloud",
+                    "type": "info"
+                },
+                {
+                    "message": "Edge length set to 1.0 for computing point cloud bounds",
+                    "type": "info"
+                },
+                {
+                    "message": "Georeferencing textured model /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_texturing_25d/odm_textured_model_geo.obj",
+                    "type": "info"
+                },
+                {
+                    "message": "Georeferencing textured model /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_texturing/odm_textured_model_geo.obj",
+                    "type": "info"
+                },
+                {
+                    "message": "Creating Entwine Point Tile output",
+                    "type": "info"
+                }
+            ]
+        },
+        {
+            "name": "odm_dem",
+            "startTime": "2025-12-27T05:14:53.346812",
+            "messages": [
+                {
+                    "message": "============ Dem =============",
+                    "type": "info"
+                },
+                {
+                    "message": "Maximum resolution set to 1.0 * (GSD - 10.0%) (2.36 cm / pixel, requested resolution was 2.00 cm / pixel)",
+                    "type": "warning"
+                },
+                {
+                    "message": "Create DSM: True",
+                    "type": "info"
+                },
+                {
+                    "message": "Create DTM: False",
+                    "type": "info"
+                },
+                {
+                    "message": "DEM input file /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_georeferencing/odm_georeferenced_model.laz found: True",
+                    "type": "info"
+                },
+                {
+                    "message": "Generated 27 tiles",
+                    "type": "info"
+                },
+                {
+                    "message": "Filtering /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_dem/merged.vrt",
+                    "type": "info"
+                },
+                {
+                    "message": "Completed smoothing to create /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_dem/dsm.tif in 0:00:10.235530",
+                    "type": "info"
+                },
+                {
+                    "message": "Set /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_dem/dsm.tif unit to m",
+                    "type": "info"
+                },
+                {
+                    "message": "Completed dsm.tif in 0:00:23.562630",
+                    "type": "info"
+                },
+                {
+                    "message": "Cropping /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_dem/dsm.tif",
+                    "type": "info"
+                },
+                {
+                    "message": "Optimizing /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_dem/dsm.tif as Cloud Optimized GeoTIFF",
+                    "type": "info"
+                }
+            ]
+        },
+        {
+            "name": "odm_orthophoto",
+            "startTime": "2025-12-27T05:15:20.962458",
+            "messages": [
+                {
+                    "message": "========= Orthophoto =========",
+                    "type": "info"
+                },
+                {
+                    "message": "Maximum resolution set to 1.0 * (GSD - 10.0%) (2.36 cm / pixel, requested resolution was 2.00 cm / pixel)",
+                    "type": "warning"
+                },
+                {
+                    "message": "Creating GeoTIFF",
+                    "type": "info"
+                },
+                {
+                    "message": "Cropping /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_orthophoto/odm_orthophoto.tif",
+                    "type": "info"
+                },
+                {
+                    "message": "Optimizing /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_orthophoto/odm_orthophoto.tif as Cloud Optimized GeoTIFF",
+                    "type": "info"
+                },
+                {
+                    "message": "Wrote /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_orthophoto/odm_orthophoto_extent.dxf",
+                    "type": "info"
+                },
+                {
+                    "message": "Wrote /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_orthophoto/odm_orthophoto.tfw",
+                    "type": "info"
+                }
+            ]
+        },
+        {
+            "name": "odm_report",
+            "startTime": "2025-12-27T05:15:31.156409",
+            "messages": [
+                {
+                    "message": "=========== Report ===========",
+                    "type": "info"
+                },
+                {
+                    "message": "Exporting shots.geojson",
+                    "type": "info"
+                },
+                {
+                    "message": "Wrote /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_report/shots.geojson",
+                    "type": "info"
+                },
+                {
+                    "message": "Copied /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/opensfm/camera_mappings.npz --> /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_report/camera_mappings.npz",
+                    "type": "info"
+                },
+                {
+                    "message": "Cropping /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/opensfm/stats/overlap.tif",
+                    "type": "info"
+                },
+                {
+                    "message": "Computing raster stats for /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_dem/dsm.preview.tif",
+                    "type": "info"
+                },
+                {
+                    "message": "Exporting report to /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_report/report.pdf",
+                    "type": "info"
+                }
+            ]
+        },
+        {
+            "name": "odm_postprocess",
+            "startTime": "2025-12-27T05:15:51.091525",
+            "messages": [
+                {
+                    "message": "======== Postprocess =========",
+                    "type": "info"
+                },
+                {
+                    "message": "Generating glTF Binary",
+                    "type": "info"
+                },
+                {
+                    "message": "Converting /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_texturing/odm_textured_model_geo.obj --> /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_texturing/odm_textured_model_geo.glb",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_texturing/odm_textured_model_geo.obj",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0000_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0001_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0002_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0003_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0004_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0005_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0006_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0007_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0008_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0009_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0010_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0011_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0012_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0013_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0014_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0015_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0016_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0017_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0018_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0019_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0020_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0021_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0022_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0023_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0024_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0025_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0026_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0027_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0028_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0029_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0030_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0031_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0032_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0033_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0034_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0035_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0036_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0037_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0038_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0039_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0040_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0041_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0042_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0043_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0044_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0045_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0046_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0047_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0048_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0049_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0050_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0051_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0052_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0053_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0054_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0055_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0056_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0057_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0058_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0059_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0060_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0061_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0062_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0063_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0064_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0065_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0066_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0067_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0068_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0069_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0070_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0071_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0072_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0073_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0074_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0075_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0076_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Loading odm_textured_model_geo_material0077_map_Kd.png",
+                    "type": "info"
+                },
+                {
+                    "message": "Writing...",
+                    "type": "info"
+                },
+                {
+                    "message": "Wrote /var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_texturing/odm_textured_model_geo.glb",
+                    "type": "info"
+                },
+                {
+                    "message": "Compressing with draco",
+                    "type": "info"
+                },
+                {
+                    "message": "No more stages",
+                    "type": "info"
+                }
+            ],
+            "endTime": "2025-12-27T05:16:12.357738",
+            "totalTime": 21.27
+        }
+    ],
+    "processes": [],
+    "success": true,
+    "endTime": "2025-12-27T05:16:12.357738",
+    "totalTime": 1684.92
+}

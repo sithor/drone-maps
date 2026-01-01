@@ -1,0 +1,16 @@
+[
+  {
+    "bounds": [
+      301988.77,
+      5915615.976,
+      142.07,
+      302271.497,
+      5915878.667,
+      199.614
+    ],
+    "inserted": true,
+    "metadataPath": "odm_georeferenced_model.json",
+    "path": "/var/www/data/9124b791-9d9b-4b22-8ed2-06813a3ce0cf/odm_georeferencing/odm_georeferenced_model.laz",
+    "points": 27542000
+  }
+]

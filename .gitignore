@@ -1,0 +1,19 @@
+# Data files (too large for GitHub)
+all/odm_dem/
+all/odm_georeferencing/
+all/odm_orthophoto/
+all/odm_texturing/
+all/odm_report/
+all/entwine_pointcloud/
+
+# Keep only JSON metadata
+!all/*.json
+!all/odm_report/*.json
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db

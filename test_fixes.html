@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crash Prevention Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #2563eb; }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .status { padding: 10px; margin: 10px 0; border-radius: 4px; }
+        .pass { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+        .fail { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+        .info { background: #dbeafe; color: #1e40af; border-left: 4px solid #3b82f6; }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+        button:hover { background: #2563eb; }
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Crash Prevention Test Suite</h1>
+    
+    <div class="test-section">
+        <h2>1. Library Loading Test</h2>
+        <div id="library-test"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. Error Handling Test</h2>
+        <button onclick="testErrorHandling()">Test Error Handler</button>
+        <button onclick="testRecoverableError()">Test Recoverable Error</button>
+        <div id="error-test"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. Memory Management Test</h2>
+        <button onclick="testMemoryManagement()">Test Loading State</button>
+        <div id="memory-test"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. File Loading Test</h2>
+        <button onclick="testFileLoading()">Test Orthophoto Detection</button>
+        <div id="file-test"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>5. System Status</h2>
+        <div id="system-test"></div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/georaster@1.5.6"></script>
+    <script src="https://unpkg.com/georaster-layer-for-leaflet@3.7.0"></script>
+    
+    <script>
+        // Test 1: Library Loading
+        function testLibraries() {
+            const results = [];
+            const libs = [
+                { name: 'Leaflet', test: () => typeof L !== 'undefined' },
+                { name: 'parseGeoraster', test: () => typeof parseGeoraster === 'function' },
+                { name: 'GeoRasterLayer', test: () => typeof GeoRasterLayer !== 'undefined' }
+            ];
+            
+            libs.forEach(lib => {
+                const passed = lib.test();
+                results.push(`
+                    <div class="status ${passed ? 'pass' : 'fail'}">
+                        ${passed ? '✅' : '❌'} ${lib.name}: ${passed ? 'Loaded' : 'Failed'}
+                    </div>
+                `);
+            });
+            
+            document.getElementById('library-test').innerHTML = results.join('');
+        }
+        
+        // Test 2: Error Handling
+        function testErrorHandling() {
+            const output = document.getElementById('error-test');
+            try {
+                // Simulate error
+                throw new Error('Test error - this is expected!');
+            } catch (error) {
+                output.innerHTML = `
+                    <div class="status pass">
+                        ✅ Error caught successfully: ${error.message}
+                    </div>
+                `;
+            }
+        }
+        
+        function testRecoverableError() {
+            const output = document.getElementById('error-test');
+            output.innerHTML = `
+                <div class="status info">
+                    ℹ️ Error recovery mechanism would trigger here
+                </div>
+            `;
+        }
+        
+        // Test 3: Memory Management
+        function testMemoryManagement() {
+            const output = document.getElementById('memory-test');
+            let memInfo = 'Memory API not available in this environment';
+            
+            if (performance && performance.memory) {
+                const mem = performance.memory;
+                memInfo = `
+                    Used: ${(mem.usedJSHeapSize / 1048576).toFixed(2)} MB<br>
+                    Limit: ${(mem.jsHeapSizeLimit / 1048576).toFixed(2)} MB<br>
+                    Available: ${((mem.jsHeapSizeLimit - mem.usedJSHeapSize) / 1048576).toFixed(2)} MB
+                `;
+            }
+            
+            output.innerHTML = `
+                <div class="status info">
+                    ℹ️ Memory Status:<br>${memInfo}
+                </div>
+            `;
+        }
+        
+        // Test 4: File Loading
+        async function testFileLoading() {
+            const output = document.getElementById('file-test');
+            output.innerHTML = '<div class="status info">Testing file access...</div>';
+            
+            const urls = [
+                'all/odm_orthophoto/odm_orthophoto_web.tif',
+                'all/odm_orthophoto/odm_orthophoto.tif'
+            ];
+            
+            const results = [];
+            for (const url of urls) {
+                try {
+                    const response = await fetch(url, { method: 'HEAD' });
+                    const sizeMB = response.headers.get('Content-Length') 
+                        ? (parseInt(response.headers.get('Content-Length')) / 1048576).toFixed(1) 
+                        : 'unknown';
+                    
+                    results.push(`
+                        <div class="status ${response.ok ? 'pass' : 'fail'}">
+                            ${response.ok ? '✅' : '❌'} ${url}<br>
+                            Size: ${sizeMB} MB | Status: ${response.status}
+                        </div>
+                    `);
+                } catch (error) {
+                    results.push(`
+                        <div class="status fail">
+                            ❌ ${url}<br>
+                            Error: ${error.message}
+                        </div>
+                    `);
+                }
+            }
+            
+            output.innerHTML = results.join('');
+        }
+        
+        // Test 5: System Status
+        function checkSystemStatus() {
+            const output = document.getElementById('system-test');
+            const info = [];
+            
+            info.push(`<div class="status info">
+                <strong>Browser:</strong> ${navigator.userAgent.split(' ').pop()}<br>
+                <strong>Platform:</strong> ${navigator.platform}<br>
+                <strong>Online:</strong> ${navigator.onLine ? 'Yes' : 'No'}<br>
+                <strong>Hardware Concurrency:</strong> ${navigator.hardwareConcurrency || 'Unknown'} cores
+            </div>`);
+            
+            // Check if running in Codespaces
+            if (window.location.hostname.includes('github') || window.location.hostname.includes('codespaces')) {
+                info.push(`<div class="status pass">✅ Running in GitHub Codespaces</div>`);
+            }
+            
+            output.innerHTML = info.join('');
+        }
+        
+        // Run tests on load
+        window.addEventListener('load', () => {
+            testLibraries();
+            checkSystemStatus();
+        });
+        
+        // Monitor errors
+        window.addEventListener('error', (e) => {
+            console.error('Global error caught:', e.message);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drone Mapping - WebODM Output</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet Draw CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+        
+        header {
+            background-color: #2d2d2d;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+        
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            font-size: 0.875rem;
+            color: #999;
+            margin-top: 0.25rem;
+        }
+        
+        #map {
+            flex: 1;
+            background-color: #0a0a0a;
+        }
+        
+        .controls {
+            position: absolute;
+            top: 90px;
+            right: 10px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            max-width: 300px;
+        }
+        
+        .controls h3 {
+            margin: 0 0 10px 0;
+            font-size: 1rem;
+            color: #333;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+        
+        .control-section {
+            margin: 15px 0;
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .control-section:last-child {
+            border-bottom: none;
+        }
+        
+        .controls label {
+            display: block;
+            margin: 8px 0;
+            color: #555;
+            font-size: 0.875rem;
+        }
+        
+        .controls input[type="range"] {
+            width: 100%;
+        }
+        
+        .controls input[type="checkbox"] {
+            margin-right: 8px;
+        }
+        
+        .measurement-btn {
+            display: block;
+            width: 100%;
+            padding: 8px 12px;
+            margin: 5px 0;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background 0.2s;
+        }
+        
+        .measurement-btn:hover {
+            background: #2563eb;
+        }
+        
+        .measurement-btn.active {
+            background: #16a34a;
+        }
+        
+        .measurement-btn.clear {
+            background: #ef4444;
+        }
+        
+        .measurement-btn.clear:hover {
+            background: #dc2626;
+        }
+        
+        .measurement-info {
+            background: #f3f4f6;
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 8px;
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+        
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 8px;
+            font-size: 1.125rem;
+            z-index: 2000;
+        }
+        
+        .error {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(220, 38, 38, 0.95);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            z-index: 3000;
+            max-width: 90%;
+            max-height: 80%;
+            overflow-y: auto;
+            border: 2px solid #dc2626;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .error .retry-btn, .error .close-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background 0.2s;
+        }
+        
+        .error .retry-btn:hover, .error .close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🗺️ Drone Mapping - WebODM Output</h1>
+        <div class="subtitle">Fast Orthographic Map Viewer (Optimized Version)</div>
+    </header>
+    
+    <div id="loading" class="loading">Loading orthophoto...</div>
+    <div id="map"></div>
+    
+    <div class="controls">
+        <h3>🗺️ Map Controls</h3>
+        
+        <div class="control-section">
+            <label>
+                <input type="checkbox" id="toggle-layer" checked> Show Orthophoto
+            </label>
+            <label>
+                Opacity: <span id="opacity-value">100</span>%
+                <input type="range" id="opacity-slider" min="0" max="100" value="100">
+            </label>
+        </div>
+        
+        <div class="control-section">
+            <strong style="font-size: 0.875rem; color: #333; display: block; margin-bottom: 8px;">📏 Measurements</strong>
+            <button id="measure-distance" class="measurement-btn">📐 Measure Distance</button>
+            <button id="measure-area" class="measurement-btn">📦 Measure Area</button>
+            <button id="clear-measurements" class="measurement-btn clear">🗑️ Clear All</button>
+            <div id="measurement-result" class="measurement-info" style="display: none;"></div>
+        </div>
+    </div>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" onerror="handleScriptError('Leaflet')"></script>
+    <!-- Leaflet Draw -->
+    <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js" onerror="handleScriptError('Leaflet Draw')"></script>
+    <!-- Leaflet GeoTIFF -->
+    <script src="https://unpkg.com/georaster@1.5.6" onerror="handleScriptError('Georaster')"></script>
+    <script src="https://unpkg.com/georaster-layer-for-leaflet@3.7.0" onerror="handleScriptError('Georaster Layer')"></script>
+    
+    <script>
+        // Global error handling for script loading failures
+        function handleScriptError(libraryName) {
+            console.error(`Failed to load ${libraryName} library`);
+            document.addEventListener('DOMContentLoaded', function() {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error';
+                errorDiv.innerHTML = `
+                    <strong>⚠️ Library Loading Error</strong><br>
+                    Failed to load ${libraryName} from CDN.<br><br>
+                    <strong>Possible solutions:</strong><br>
+                    1. Check your internet connection<br>
+                    2. Refresh the page<br>
+                    3. Check if CDN services are accessible<br><br>
+                    <button onclick="location.reload()" class="retry-btn">🔄 Retry</button>
+                    <button onclick="this.parentElement.remove()" class="close-btn">✕ Close</button>
+                `;
+                document.body.appendChild(errorDiv);
+            });
+        }
+        
+        // Global error handler for unhandled JavaScript errors
+        window.addEventListener('error', function(event) {
+            console.error('Global error:', event.error);
+            
+            // Don't show error for script loading failures (already handled above)
+            if (event.target && (event.target.tagName === 'SCRIPT' || event.target.tagName === 'LINK')) {
+                return;
+            }
+            
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error';
+            errorDiv.innerHTML = `
+                <strong>⚠️ JavaScript Error</strong><br>
+                ${event.message || 'An unexpected error occurred'}<br><br>
+                <button onclick="location.reload()" class="retry-btn">🔄 Refresh Page</button>
+                <button onclick="this.parentElement.remove()" class="close-btn">✕ Close</button>
+            `;
+            document.body.appendChild(errorDiv);
+        });
+        
+        // Handle unhandled promise rejections
+        window.addEventListener('unhandledrejection', function(event) {
+            console.error('Unhandled promise rejection:', event.reason);
+            
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error';
+            errorDiv.innerHTML = `
+                <strong>⚠️ Application Error</strong><br>
+                ${event.reason?.message || 'A promise was rejected unexpectedly'}<br><br>
+                <button onclick="location.reload()" class="retry-btn">🔄 Refresh Page</button>
+                <button onclick="this.parentElement.remove()" class="close-btn">✕ Close</button>
+            `;
+            document.body.appendChild(errorDiv);
+            
+            // Prevent the default console error
+            event.preventDefault();
+        });
+    </script>
+    
+    <script src="app.js"></script>
+</body>
+</html>
