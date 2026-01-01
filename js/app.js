@@ -264,8 +264,9 @@ function loadModel() {
     
     showMessage('models', 'Loading model... This may take a moment.', 'info');
     
-    // Note: This is a placeholder. In production, you'd use THREE.OBJLoader, THREE.PLYLoader, etc.
-    // For now, we'll create a sample geometric model
+    // TODO: Implement actual model loaders (THREE.OBJLoader, THREE.PLYLoader, etc.)
+    // Current implementation shows a sample terrain for demonstration purposes
+    // For production use, integrate proper Three.js model loaders based on file extension
     loadSampleModel();
     updateModelInfo(`Model URL: ${modelUrl} (Note: Using sample geometry for demonstration)`);
     showMessage('models', 'Sample model loaded. For production use, implement proper model loaders.', 'info');
@@ -283,8 +284,9 @@ function loadModelFile(file) {
     const reader = new FileReader();
     
     reader.onload = function(e) {
-        // In production, parse the file based on extension
-        // For now, load a sample model
+        // TODO: Parse the file based on extension and use appropriate Three.js loader
+        // Example: .obj -> OBJLoader, .ply -> PLYLoader, .las/.laz -> LASLoader
+        // Current implementation shows a sample model for demonstration
         loadSampleModel();
         updateModelInfo(`File: ${file.name} (${formatBytes(file.size)}) - Using sample geometry for demonstration`);
         showMessage('models', 'Sample model loaded. Implement proper file parsers for production use.', 'info');
