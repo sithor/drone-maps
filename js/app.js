@@ -95,9 +95,10 @@ function loadMapTiles() {
         updateMapInfo(`Orthophoto tiles loaded from: ${tileUrl}`);
         showMessage('maps', 'Map tiles loaded successfully!', 'success');
         
-        // Try to fit bounds if possible (this is a simple implementation)
-        // In production, you'd want to get bounds from webODM API
-        map.setView([0, 0], 18);
+        // Try to fit bounds if possible
+        // Note: In production, you should get bounds from webODM API
+        // For now, zoom to a reasonable level and allow user to adjust
+        map.setView([0, 0], 3);
         
     } catch (error) {
         console.error('Error loading map tiles:', error);
@@ -170,6 +171,19 @@ function setupBasicControls() {
     let isDragging = false;
     let previousMousePosition = { x: 0, y: 0 };
     
+    // Store camera's spherical coordinates for proper orbiting
+    let cameraRadius = 150;
+    let cameraTheta = Math.PI / 4; // Azimuthal angle
+    let cameraPhi = Math.PI / 3;   // Polar angle
+    let target = new THREE.Vector3(0, 0, 0);
+    
+    function updateCamera() {
+        camera.position.x = target.x + cameraRadius * Math.sin(cameraPhi) * Math.cos(cameraTheta);
+        camera.position.y = target.y + cameraRadius * Math.cos(cameraPhi);
+        camera.position.z = target.z + cameraRadius * Math.sin(cameraPhi) * Math.sin(cameraTheta);
+        camera.lookAt(target);
+    }
+    
     container.addEventListener('mousedown', (e) => {
         isDragging = true;
         previousMousePosition = { x: e.clientX, y: e.clientY };
@@ -181,13 +195,20 @@ function setupBasicControls() {
         const deltaX = e.clientX - previousMousePosition.x;
         const deltaY = e.clientY - previousMousePosition.y;
         
-        if (e.buttons === 1) { // Left button - rotate
-            camera.position.x += deltaX * 0.5;
-            camera.position.y -= deltaY * 0.5;
-            camera.lookAt(scene.position);
+        if (e.buttons === 1) { // Left button - orbital rotation
+            cameraTheta += deltaX * 0.01;
+            cameraPhi = Math.max(0.1, Math.min(Math.PI - 0.1, cameraPhi - deltaY * 0.01));
+            updateCamera();
         } else if (e.buttons === 2) { // Right button - pan
-            camera.position.x -= deltaX * 0.1;
-            camera.position.z -= deltaY * 0.1;
+            const panSpeed = 0.3;
+            const right = new THREE.Vector3();
+            const up = new THREE.Vector3(0, 1, 0);
+            camera.getWorldDirection(right);
+            right.cross(up).normalize();
+            
+            target.addScaledVector(right, -deltaX * panSpeed);
+            target.y -= deltaY * panSpeed;
+            updateCamera();
         }
         
         previousMousePosition = { x: e.clientX, y: e.clientY };
@@ -201,10 +222,14 @@ function setupBasicControls() {
         e.preventDefault();
         const zoomSpeed = 0.1;
         const direction = e.deltaY > 0 ? 1 : -1;
-        camera.position.z += direction * zoomSpeed * 10;
+        cameraRadius = Math.max(10, Math.min(500, cameraRadius + direction * zoomSpeed * 10));
+        updateCamera();
     });
     
     container.addEventListener('contextmenu', (e) => e.preventDefault());
+    
+    // Set initial camera position
+    updateCamera();
 }
 
 function animate() {
